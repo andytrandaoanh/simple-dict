@@ -1,0 +1,49 @@
+{
+  "name": "simple_dictionary",
+  "version": "1.0.0",
+  "description": "Dictionary search based on Flask/MongoDB backend and ReactJS front end",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack --mode production",
+    "start": "webpack-dev-server --open",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/andytrandaoanh/minimal-material.git"
+  },
+  "keywords": [
+    "reactjs",
+    "material-ui",
+    "babel",
+    "webpack"
+  ],
+  "author": "Andy Tran Dao Anh",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "^7.5.5",
+    "@babel/plugin-proposal-class-properties": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.6",
+    "css-loader": "^3.1.0",
+    "file-loader": "^4.1.0",
+    "html-loader": "^0.5.5",
+    "html-webpack-plugin": "^3.2.0",
+    "node-sass": "^4.12.0",
+    "path": "^0.12.7",
+    "sass-loader": "^7.1.0",
+    "style-loader": "^0.23.1",
+    "webpack": "^4.38.0",
+    "webpack-cli": "^3.3.6",
+    "webpack-dev-server": "^3.7.2"
+  },
+  "dependencies": {
+    "@material-ui/core": "^4.2.1",
+    "@material-ui/icons": "^4.2.1",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-router-dom": "^5.0.1",
+    "typeface-roboto": "0.0.75"
+  }
+}
