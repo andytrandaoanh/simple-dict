@@ -1,14 +1,12 @@
 import React from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import SearchAppBar from './menu/appbar';
-
+import Album from './main/main';
 
 function App () {
 	return (
 		<div className = "App">
-			<BrowserRouter>
-				<SearchAppBar />      
-			</BrowserRouter>
+			<SearchAppBar />
+			<Album />      
     	</div>
 	)
 }
