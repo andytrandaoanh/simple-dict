@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -66,6 +66,12 @@ const useStyles = makeStyles(theme => ({
 
 export default function SearchAppBar() {
   const classes = useStyles();
+  const [searchText, setSearchText] = useState("");
+
+  const handleKeyUp = event => {
+    //alert(searchText);
+    if (event.key ==  'Enter') {alert('You pressed Enter')}
+  };
 
   return (
     <MuiThemeProvider theme={theme}>
@@ -94,6 +100,9 @@ export default function SearchAppBar() {
                   input: classes.inputInput,
                 }}
                 inputProps={{ 'aria-label': 'search' }}
+                value = {searchText}
+                onChange={e => setSearchText(e.target.value)}
+                onKeyUp={e => handleKeyUp(e)}
               />
             </div>
           </Toolbar>
