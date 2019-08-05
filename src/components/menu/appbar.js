@@ -12,6 +12,7 @@ import theme from '../theme/theme';
 
 
 import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 import { fetchDefinitions } from "../../actions/definitions";
 
 
@@ -70,7 +71,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-function SearchAppBar() {
+function SearchAppBar(props) {
   const classes = useStyles();
   const [searchText, setSearchText] = useState("");
 
@@ -80,7 +81,7 @@ function SearchAppBar() {
 
         console.log('Enter pressed: ', searchText);
 
-        fetchDefinitions(searchText);
+        props.fetchDefinitions(searchText);
 
     }
   };
@@ -128,9 +129,13 @@ function SearchAppBar() {
 
 
 
-const mapDispatchToProps = dispatch => ({
-  fetchDefinitions: () => dispatch(fetchDefinitions())
-});
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators(
+    { 
+      fetchDefinitions
+    }, dispatch);
+};
+
 
 
 export default connect(null, mapDispatchToProps)(SearchAppBar);
