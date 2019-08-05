@@ -11,6 +11,12 @@ import {MuiThemeProvider} from '@material-ui/core/styles';
 import theme from '../theme/theme';
 
 
+import { connect } from "react-redux";
+import { fetchDefinitions } from "../../actions/definitions";
+
+
+
+
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
@@ -64,13 +70,19 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-export default function SearchAppBar() {
+function SearchAppBar() {
   const classes = useStyles();
   const [searchText, setSearchText] = useState("");
 
   const handleKeyUp = event => {
     //alert(searchText);
-    if (event.key ==  'Enter') {alert('You pressed Enter')}
+    if (event.key ==  'Enter') {
+
+        console.log('Enter pressed: ', searchText);
+
+        fetchDefinitions(searchText);
+
+    }
   };
 
   return (
@@ -112,3 +124,13 @@ export default function SearchAppBar() {
     
   );
 }
+
+
+
+
+const mapDispatchToProps = dispatch => ({
+  fetchDefinitions: () => dispatch(fetchDefinitions())
+});
+
+
+export default connect(null, mapDispatchToProps)(SearchAppBar);
