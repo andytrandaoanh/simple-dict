@@ -79,7 +79,7 @@ function SearchAppBar(props) {
     //alert(searchText);
     if (event.key ==  'Enter') {
 
-        console.log('Enter pressed: ', searchText);
+        //console.log('Enter pressed: ', searchText);
 
         props.fetchDefinitions(searchText);
 

@@ -14,17 +14,13 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Link from '@material-ui/core/Link';
 
-function MadeWithLove() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Built with love by the '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Material-UI
-      </Link>
-      {' team.'}
-    </Typography>
-  );
-}
+
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import uuid from "uuid";
+
+
+
 const useStyles = makeStyles(theme => ({
   icon: {
     marginRight: theme.spacing(2),
@@ -57,10 +53,41 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
-export default function Album() {
+
+function MainDisplay(props) {
   const classes = useStyles();
+  //if (props.items) {console.log(props.items)}  
+
+  const renderHeadWord = () => {
+    return (
+      <Typography gutterBottom variant="h4" component="h2">
+         {props.search}
+      </Typography>
+    );
+  }  
+
+
+
+  const renderOrigin = content => {
+
+    return (
+    <CardContent className={classes.cardContent}>
+       {content}
+    </CardContent>
+    )
+
+  }
+
+  const renderCard = word => {
+    return (    
+    <CardContent className={classes.cardContent}>
+       {word['word']}
+    </CardContent>
+    )
+  }  
+
+
 
   return (
     <React.Fragment>
@@ -80,48 +107,47 @@ export default function Album() {
         </div>
         <Container className={classes.cardGrid} maxWidth="xl">
           {/* End hero unit */}
+          {renderHeadWord()}
+
           <Grid container spacing={4}>
-            {cards.map(card => (
-              <Grid item key={card} xs={12} sm={6} md={4}>
-                <Card className={classes.card}>
-                  <CardMedia
-                    className={classes.cardMedia}
-                    image="https://source.unsplash.com/random"
-                    title="Image title"
-                  />
-                  <CardContent className={classes.cardContent}>
-                    <Typography gutterBottom variant="h5" component="h2">
-                      Heading
-                    </Typography>
-                    <Typography>
-                      This is a media card. You can use this section to describe the content.
-                    </Typography>
-                  </CardContent>
-                  <CardActions>
-                    <Button size="small" color="primary">
-                      View
-                    </Button>
-                    <Button size="small" color="primary">
-                      Edit
-                    </Button>
-                  </CardActions>
-                </Card>
-              </Grid>
+                     
+            {props.items.map((item, index) => (
+
+                <Grid item key={index} xs={12} sm={6} md={4}>
+                  <Card className={classes.card}>               
+                    {renderCard(item)}
+                  </Card>
+                </Grid>
+
             ))}
+
+            
+
           </Grid>
         </Container>
       </main>
       {/* Footer */}
       <footer className={classes.footer}>
         <Typography variant="h6" align="center" gutterBottom>
-          Footer
+          Copyright (C) 2019-2020 DigiNet Corporation 
         </Typography>
         <Typography variant="subtitle1" align="center" color="textSecondary" component="p">
-          Something here to give the footer a purpose!
+          Developed with ReactJS, Material-UI, Flask and MongoDB and MySQL
         </Typography>
-        <MadeWithLove />
+        
       </footer>
       {/* End footer */}
     </React.Fragment>
   );
 }
+
+
+
+const mapStateToProps = state => ({
+    items: state.definitionReducer.items,
+    search: state.definitionReducer.search
+   
+});
+
+export default connect(mapStateToProps, null)(MainDisplay);
+
