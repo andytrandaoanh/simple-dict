@@ -13,11 +13,14 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Link from '@material-ui/core/Link';
-
+import Box from '@material-ui/core/Box';
 
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import uuid from "uuid";
+
+import {MuiThemeProvider} from '@material-ui/core/styles';
+import theme from '../theme/theme';
 
 
 
@@ -61,28 +64,77 @@ function MainDisplay(props) {
 
   const renderHeadWord = () => {
     return (
-      <Typography gutterBottom variant="h4" component="h2">
+      <Typography gutterBottom variant="h3" component="h2" color="primary">
+        <Box fontWeight="fontWeightBold">
          {props.search}
+        </Box>
       </Typography>
     );
   }  
 
 
 
-  const renderOrigin = content => {
 
-    return (
-    <CardContent className={classes.cardContent}>
-       {content}
-    </CardContent>
-    )
+  const renderSynonyms = synonyms => {
+
+    if(synonyms){
+      return(
+        <Box fontStyle="normal" m={1}>
+          
+             SYNONYMS: {synonyms}
+        </Box>
+      )
+    }
+    else {return null}
+    
 
   }
+
+
+  const renderDefinitions = meanings => {
+
+
+    return(
+      meanings.map((meaning, index) =>(
+
+        
+          <Typography key = {uuid.v4()} variant="h6" component="h2">
+            
+            <Box fontWeight="fontWeightBold"  m={1}>
+             {index + 1}. {meaning['definition']}
+            </Box>
+          
+            <Box fontStyle="italic" m={1}>
+          
+             {meaning['example']}
+            </Box>
+                      
+            {renderSynonyms(meaning['synonyms'])}
+          </Typography>
+        
+
+    ))
+  )}
 
   const renderCard = word => {
     return (    
     <CardContent className={classes.cardContent}>
-       {word['word']}
+       
+      <Typography gutterBottom variant="h6" component="h2" color="secondary">
+         {word['category'].toUpperCase()}
+      </Typography>
+
+      <Typography gutterBottom variant="h6" component="h2">
+         {word['phonetic']}
+      </Typography>
+
+      {renderDefinitions(word['meaning'])}
+
+
+      <Typography gutterBottom variant="h6" component="h2">
+         ORIGIN: {word['origin']}
+      </Typography>
+
     </CardContent>
     )
   }  
@@ -90,6 +142,8 @@ function MainDisplay(props) {
 
 
   return (
+
+   <MuiThemeProvider theme={theme}>
     <React.Fragment>
       <CssBaseline />
 
@@ -138,6 +192,7 @@ function MainDisplay(props) {
       </footer>
       {/* End footer */}
     </React.Fragment>
+    </MuiThemeProvider>
   );
 }
 
