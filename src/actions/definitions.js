@@ -6,7 +6,7 @@ export const fetchDefinitions = (word) => async dispatch => {
 
 	//console.log('fetch definition');
 	
-	const response = await axios.get("http://localhost:5000/definition/" + word);
+	const response = await axios.get("http://localhost:3001/definition/" + word);
 
 	const data = {search: word, items: response.data};
 	
