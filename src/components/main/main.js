@@ -67,10 +67,49 @@ const useStyles = makeStyles(theme => ({
 
   },
 
+  example: {
+  	marginLeft: theme.spacing(2),
+
+  },
 }));
 
 function MainDisplay(props) {
 	const classes = useStyles();
+
+	const renderExamples = exObj => {
+
+		return (
+
+			<div key={uuid.v4()}> 
+
+
+				<Typography variant="body1" component="div" color="primary">
+			        <Box component="span" m={1} fontWeight="fontWeightBold">
+    				 {exObj.number}
+    				 </Box> 
+			     </Typography>
+
+			
+
+
+				{exObj.examples.map(example=>(
+
+					      <Typography key={uuid.v4()} variant="body1" gutterBottom className={classes.example}>
+					        
+	        				{example} 
+	      					
+					      </Typography>			
+
+				))}
+
+
+			</div>
+
+		)
+
+	}
+
+
 
 	const renderMeanings = meanings =>{
 
@@ -79,7 +118,7 @@ function MainDisplay(props) {
 				{
 					meanings.map(meaning =>(
 					<div key={uuid.v4()}>
-				      <Typography variant="body1">
+				      <Typography variant="body1" component="div">
 				        <Box component="span" m={1} fontWeight="fontWeightBold">
         				 {meaning.number}
         				 </Box> 
@@ -89,14 +128,12 @@ function MainDisplay(props) {
         				 <Box component="span">
         				 {meaning.meaning}
         				 </Box>
-      					
-      					
 				      </Typography>
-				      <Typography key={uuid.v4()} variant="body1" gutterBottom>
+
+				      <Typography key={uuid.v4()} variant="body1" component="div">
 				         <Box fontStyle="oblique" m={2}>
         					{meaning.example} 
-      					</Box>
-				        
+      					</Box>		        
 				      </Typography>				      
 					</div>
 					))
@@ -140,7 +177,7 @@ function MainDisplay(props) {
 
    			        {item.meanings.map(meaning =>(
    			          <div key={uuid.v4()} className={classes.senseholder}>
-	   			          <Divider />
+	   			        <Divider />
 							
 						 <Typography  key={uuid.v4()} variant="button" display="block" gutterBottom color="secondary">
 	        				{meaning.category}
@@ -187,7 +224,27 @@ function MainDisplay(props) {
 			        
 
 
+   			        
+   			        <div className = {classes.footer}>
+	   			        <Divider />
+				        <Typography  variant="button" display="block" gutterBottom color="secondary">
+		        				MORE EXAMPLES
+		      			</Typography>	
+						
+						{item.examples.map(exampleList => (
 
+							<div key={uuid.v4()}>
+
+								{renderExamples(exampleList)}
+
+
+							</div>
+
+						))}
+
+				    </div>
+
+			        
 
 			        
 
