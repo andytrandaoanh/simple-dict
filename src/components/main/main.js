@@ -8,6 +8,7 @@ import Grid from '@material-ui/core/Grid';
 import Chip from '@material-ui/core/Chip';
 import Divider from '@material-ui/core/Divider';
 import Badge from '@material-ui/core/Badge';
+import Box from '@material-ui/core/Box';
 
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
@@ -37,30 +38,72 @@ const useStyles = makeStyles(theme => ({
 
   footer: {
     padding: theme.spacing(2, 2),
-    marginTop: theme.spacing(1),
+    marginTop: theme.spacing(2),
   },
 
    chip: {
     margin: theme.spacing(1),
   },
 
-  phonetic: {
-  	marginTop: theme.spacing(4),
-
+  senseholder: {
+	marginTop: theme.spacing(1),  	
   },
+  
+  meaning: {
+	margin: theme.spacing(1),  	
+  }
+  ,
 
   footer: {
 	marginTop: theme.spacing(1),  	
   },
 
   badge: {
-    padding: theme.spacing(0, 2),
+    padding: theme.spacing(0, 1),
+  },
+
+  phonetic: {
+  	marginLeft: theme.spacing(1),
+
   },
 
 }));
 
 function MainDisplay(props) {
 	const classes = useStyles();
+
+	const renderMeanings = meanings =>{
+
+		return(
+			<div key={uuid.v4()} className = {classes.meaning}>
+				{
+					meanings.map(meaning =>(
+					<div key={uuid.v4()}>
+				      <Typography variant="body1">
+				        <Box component="span" m={1} fontWeight="fontWeightBold">
+        				 {meaning.number}
+        				 </Box> 
+        				 <Box component="span"  color="primary">
+        				 {meaning.notes} 
+        				 </Box>
+        				 <Box component="span">
+        				 {meaning.meaning}
+        				 </Box>
+      					
+      					
+				      </Typography>
+				      <Typography key={uuid.v4()} variant="body1" gutterBottom>
+				         <Box fontStyle="oblique" m={2}>
+        					{meaning.example} 
+      					</Box>
+				        
+				      </Typography>				      
+					</div>
+					))
+				}
+			</div>
+		);
+	}
 
 	const renderItem = item =>{
 		return (
@@ -75,9 +118,7 @@ function MainDisplay(props) {
 
         			</Badge>
 
-					<Typography variant="h5" component="span" className={classes.phonetic}>
-			     		{item.header['phonetic']}
-			        </Typography>
+
 			        
 
 			        {item.header.categories.map(category=>(
@@ -86,18 +127,69 @@ function MainDisplay(props) {
 						
 			        ))}
 
-			        <Divider />
-
-			        <div className = {classes.footer}>
-			        {item.footer['word-origin'] ? ( 
-
-						<Typography variant="body2" gutterBottom>
-			     			ORIGIN: {item.footer['word-origin']}
-			        	</Typography>
 
 
+					<Typography variant="h6" color="primary" component="span" className={classes.phonetic}>
+						
+				     	 {item.header['phonetic']}
+				     	      	
+			        </Typography>
+
+
+			        
+
+   			        {item.meanings.map(meaning =>(
+   			          <div key={uuid.v4()} className={classes.senseholder}>
+	   			          <Divider />
+							
+						 <Typography  key={uuid.v4()} variant="button" display="block" gutterBottom color="secondary">
+	        				{meaning.category}
+	      				</Typography>
+
+	      				{renderMeanings(meaning.meanings)}
+
+
+				      </div>
+
+			        ))}
+
+					
+			        
+					
+			        {item.footer.usage ? ( 
+
+						<div className = {classes.footer}>
+							<Divider />
+				        	<Typography  variant="button" display="block" gutterBottom color="secondary">
+		        				USAGE
+		      				</Typography>
+
+							<Typography variant="body2" gutterBottom>
+				     			{item.footer.usage}
+				        	</Typography>
+			        	</div>
 			        ) : null} 
-			        </div>
+			        
+
+					
+					
+			        {item.footer['word-origin'] ? ( 
+			        	<div className = {classes.footer}>
+			        	<Divider />
+				        <Typography  variant="button" display="block" gutterBottom color="secondary">
+		        				ORIGIN
+		      			</Typography>
+						<Typography variant="body2" gutterBottom>
+			     			{item.footer['word-origin']}
+			        	</Typography>
+			        	</div>
+			        ) : null} 
+			        
+
+
+
+
+			        
 
 
 		        </div>
